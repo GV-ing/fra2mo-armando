@@ -206,7 +206,7 @@ local_costmap:
       rolling_window: True
       always_send_full_costmap: True
 
-      robot_radius: 0.2
+      robot_radius: 0.11
       #footprint: "[[0.17, 0.17], [0.17, -0.17], [-0.17, -0.17], [-0.17, 0.17]]"
       footprint_padding: 0.03
 
@@ -214,7 +214,7 @@ local_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         enabled: True
-        inflation_radius: 0.09
+        inflation_radius: 0.15
         cost_scaling_factor: 1.0
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
@@ -256,7 +256,7 @@ global_costmap:
       always_send_full_costmap: True
       track_unknown_space: True
 
-      robot_radius: 0.2
+      robot_radius: 0.11
       # footprint: "[[0.17, 0.17], [0.17, -0.17], [-0.17, -0.17], [-0.17, 0.17]]"
       footprint_padding: 0.03
 
@@ -264,7 +264,7 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         enabled: True
-        inflation_radius: 0.09
+        inflation_radius: 0.15
         cost_scaling_factor: 2.0
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"

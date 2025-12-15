@@ -10,9 +10,9 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    rviz_config_file = os.path.join(get_package_share_directory('ros2_fra2mo'), 'rviz_conf', 'explore.rviz')
+    rviz_config_file = os.path.join(get_package_share_directory('fra2mo_armando'), 'rviz_conf', 'explore.rviz')
     
-    fra2mo_dir = FindPackageShare('ros2_fra2mo')
+    fra2mo_dir = FindPackageShare('fra2mo_armando')
     nav2_bringup_dir = FindPackageShare('nav2_bringup')
     explore_lite_launch = PathJoinSubstitution(
         [FindPackageShare('explore_lite'), 'launch', 'explore.launch.py']

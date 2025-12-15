@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="cylinder_cyan">
+    <link name="link">
+      <inertial>
+        <mass>0.09</mass>
+        <inertia>
+          <ixx>0.00012</ixx>
+          <iyy>0.00012</iyy>
+          <izz>0.000051</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>0.02</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>0.02</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0 1 1 1</ambient>
+          <diffuse>0 1 1 1</diffuse>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

@@ -20,7 +20,7 @@
   <!-- Definizione dei Materiali -->
 
   
-  <!-- <xacro:include filename="$(find ros2_fra2mo)/urdf/d435_gazebo_macro.xacro" />  -->
+  <!-- <xacro:include filename="$(find fra2mo_armando)/urdf/d435_gazebo_macro.xacro" />  -->
   <!--fb : front, back ; lr: left, right -->
   <!-- Actual body/chassis of the robot -->
   <link name="base_footprint"/>

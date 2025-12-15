@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(ros2_fra2mo)
+project(fra2mo_armando)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -17,6 +17,9 @@ find_package(urdf REQUIRED)
 find_package(xacro REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(rclpy REQUIRED)
+find_package(ros_gz_sim REQUIRED)
+find_package(robot_state_publisher REQUIRED)
 
 add_executable(dynamic_tf_publisher src/odom_bl_tf.cpp)
 ament_target_dependencies(dynamic_tf_publisher rclcpp nav_msgs geometry_msgs tf2 tf2_ros)
@@ -32,6 +35,8 @@ install(TARGETS dynamic_tf_publisher
 install(PROGRAMS
   scripts/reach_goal.py
   scripts/follow_waypoints.py
+  scripts/test_gripper.py
+  scripts/ik_pick_place.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

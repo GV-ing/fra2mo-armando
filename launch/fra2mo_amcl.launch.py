@@ -12,7 +12,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time")
     amcl_params_file = LaunchConfiguration("amcl_params_file")
     map_file = LaunchConfiguration("map_file")
-    rviz_config_file = os.path.join(get_package_share_directory('ros2_fra2mo'), 'rviz_conf', 'amcl_view.rviz')
+    rviz_config_file = os.path.join(get_package_share_directory('fra2mo_armando'), 'rviz_conf', 'amcl_view.rviz')
 
     use_sim_time_arg = DeclareLaunchArgument(
         "use_sim_time", default_value="true", description="Use simulation/Gazebo clock"
@@ -20,14 +20,14 @@ def generate_launch_description():
 
     map_file_arg = DeclareLaunchArgument(
         "map_file",
-        default_value=PathJoinSubstitution([FindPackageShare("ros2_fra2mo"), "maps", "map.yaml"]),
+        default_value=PathJoinSubstitution([FindPackageShare("fra2mo_armando"), "maps", "map.yaml"]),
         description="Full path to the yaml map file",
     )
 
     amcl_params_file_arg = DeclareLaunchArgument(
         "amcl_params_file",
         default_value=PathJoinSubstitution(
-            [FindPackageShare("ros2_fra2mo"), "config", "amcl.yaml"]
+            [FindPackageShare("fra2mo_armando"), "config", "amcl.yaml"]
         ),
         description="Full path to the ROS2 parameters file to use for the amcl node",
     )

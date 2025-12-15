@@ -17,10 +17,10 @@ def generate_launch_description():
 
     # Percorsi ai file
     xacro_file_name = "fra2mo.urdf.xacro"
-    xacro = os.path.join(get_package_share_directory('ros2_fra2mo'), "urdf", xacro_file_name)
+    xacro = os.path.join(get_package_share_directory('fra2mo_armando'), "urdf", xacro_file_name)
 
-    models_path = os.path.join(get_package_share_directory('ros2_fra2mo'), 'models')
-    world_file = os.path.join(get_package_share_directory('ros2_fra2mo'), "worlds", "leonardo_race_field.sdf")
+    models_path = os.path.join(get_package_share_directory('fra2mo_armando'), 'models')
+    world_file = os.path.join(get_package_share_directory('fra2mo_armando'), "worlds", "office_small.sdf")
 
     # Genera la descrizione del robot usando xacro
     robot_description_xacro = {"robot_description": ParameterValue(Command(['xacro ', xacro]),value_type=str)}
@@ -85,7 +85,7 @@ def generate_launch_description():
     )
 
     odom_tf = Node(
-        package='ros2_fra2mo',
+        package='fra2mo_armando',
         executable='dynamic_tf_publisher',
         name='odom_tf',
         parameters=[{"use_sim_time": True}]
@@ -108,4 +108,5 @@ def generate_launch_description():
     nodes_to_start = [robot_state_publisher_node, joint_state_publisher_node, *ign, bridge, 
                       odom_tf, ign_clock_bridge]
 
-    return LaunchDescription([SetEnvironmentVariable(name="GZ_SIM_RESOURCE_PATH", value = models_path + ':' + os.environ.get('GZ_SIM_RESOURCE_PATH', ''))] + declared_arguments + nodes_to_start)
+    gz_resource = models_path + ':' + os.environ.get('GZ_SIM_RESOURCE_PATH', '')
+    return LaunchDescription([SetEnvironmentVariable(name="GZ_SIM_RESOURCE_PATH", value = gz_resource)] + declared_arguments + nodes_to_start)

@@ -12,13 +12,13 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
     slam_params_file = LaunchConfiguration('slam_params_file')
     use_sim_time = LaunchConfiguration('use_sim_time')
-    rviz_config_file = os.path.join(get_package_share_directory('ros2_fra2mo'), 'rviz_conf', 'slam_view.rviz')
+    rviz_config_file = os.path.join(get_package_share_directory('fra2mo_armando'), 'rviz_conf', 'slam_view.rviz')
 
 
     slam_params_file_arg = DeclareLaunchArgument(
         'slam_params_file',
         default_value=PathJoinSubstitution(
-            [FindPackageShare("ros2_fra2mo"), 'config', 'slam.yaml']
+            [FindPackageShare("fra2mo_armando"), 'config', 'slam.yaml']
         ),
         description='Full path to the ROS2 parameters file to use for the slam_toolbox node',
     )

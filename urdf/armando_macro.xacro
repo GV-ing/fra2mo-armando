@@ -1,0 +1,512 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arm">
+<xacro:include filename="$(find fra2mo_armando)/urdf/armando_hardware_interface.xacro"/>
+<xacro:include filename="$(find fra2mo_armando)/urdf/armando_camera.xacro"/>
+<xacro:arg name="fra2mo_armando" default="$(find fra2mo_armando)"/>
+
+<xacro:macro name="armando" params="parent prefix origin_xyz origin_rpy">
+
+  <material name="red">
+    <color rgba="1 0 0 1"/>
+  </material>
+ 
+  <material name="green">
+    <color rgba="0 1 0 1"/>
+  </material>
+ 
+  <material name="blue">
+    <color rgba="0 0 1 1"/>
+  </material>
+ 
+  <material name="yellow">
+    <color rgba="1 1 0 1"/>
+  </material>
+ 
+  <material name="magenta">
+    <color rgba="1 0 1 1"/>
+  </material>
+ 
+  <material name="cyan">
+    <color rgba="0 1 1 1"/>
+  </material>
+ 
+  <material name="gray">
+    <color rgba="0.5 0.5 0.5 1"/>
+  </material>
+ 
+  <material name="orange">
+    <color rgba="1 0.5 0 1"/>
+  </material>
+
+  <!-- Joint to connect to parent -->
+  <joint name="${prefix}arm_mount_joint" type="fixed">
+    <parent link="${parent}"/>
+    <child link="${prefix}base_link"/>
+    <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
+  </joint>
+ 
+  <link name="${prefix}base_link">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg fra2mo_armando)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="red"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.07 0.07 0.08"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="1.06682889e+08" ixy="0.0" ixz="0.0" iyy="9.92165844e+07" iyz="0.0" izz="1.26939175e+08"/>
+    </inertial>    
+  </link>
+ 
+  <joint name="${prefix}base_1_2" type="fixed">
+    <parent link="${prefix}base_link"/>
+    <child link="${prefix}base_turn"/>
+    <origin xyz="-0.0011 -0.011 0.05"/>
+  </joint>
+ 
+  <link name="${prefix}base_turn">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg fra2mo_armando)/meshes/base_turn.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.05 0.05 0.02"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="1.35223008e+07" ixy="0.0" ixz="0.0" iyy="8.13814925e+06" iyz="0.0" izz="2.14903814e+07"/>
+    </inertial>
+  </link>
+ 
+  <joint name="${prefix}j0" type="revolute">
+    <parent link="${prefix}base_turn"/>
+    <child link="${prefix}base_turn_rot"/>
+    <origin xyz="-0.0 0.0155 0.013" rpy = "0 0 -1.57"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.7" lower="-2.57" upper="2.57"/>
+  </joint>
+ 
+  <link name="${prefix}base_turn_rot">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg fra2mo_armando)/meshes/base_turn_table_rot.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.05 0.05 0.01"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+   
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+ 
+  <joint name="${prefix}base_turn_rot_dyn2" type="fixed">
+    <parent link="${prefix}base_turn_rot"/>
+    <child link="${prefix}dyn2"/>
+    <origin xyz="0 0 0.0385" rpy="0 1.57 1.57 "/>
+  </joint>
+ 
+  <link name="${prefix}dyn2">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg fra2mo_armando)/meshes/dyn.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="yellow"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.03 0.03 0.03"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+     <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="6.90013881e-05" ixy="0.0" ixz="0.0" iyy="1.24554875e-04" iyz="0.0" izz="1.04295793e-04"/>
+    </inertial>
+  </link>
+ 
+  <joint name="${prefix}j1" type="revolute">
+    <parent link="${prefix}dyn2"/>
+    <child link="${prefix}dyn2_r"/>
+    <origin xyz="0 0 0.0" rpy="0 0 0"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.7" lower="-3.14" upper="3.14"/>
+  </joint>
+ 
+  <link name="${prefix}dyn2_r">
+   
+  </link>
+ 
+  <joint name="${prefix}dyn2_f4" type="fixed">
+    <parent link="${prefix}dyn2_r"/>
+    <child link="${prefix}f4"/>
+    <origin xyz="-0.047 0.0 -0.003" rpy="0 1.57 1.57"/>
+  </joint>
+ 
+  <link name="${prefix}f4">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg fra2mo_armando)/meshes/f4_n_f3.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="magenta"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.04 0.05 0.02"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+     <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="6.90013881e-05" ixy="0.0" ixz="0.0" iyy="1.24554875e-04" iyz="0.0" izz="1.04295793e-04"/>
+    </inertial>
+  </link>
+ 
+  <joint name="${prefix}d4_dyn3" type="fixed">
+    <parent link="${prefix}f4"/>
+    <child link="${prefix}dyn3"/>
+    <origin xyz="-0.004 0.0645 0 " rpy="-1.57 3.14 1.57"/>
+  </joint>
+ 
+  <link name="${prefix}dyn3">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg fra2mo_armando)/meshes/dyn.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="cyan"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.03 0.03 0.03"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+     <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="6.90013881e-05" ixy="0.0" ixz="0.0" iyy="1.24554875e-04" iyz="0.0" izz="1.04295793e-04"/>
+    </inertial>
+  </link>
+ 
+  <joint name="${prefix}j2" type="revolute">
+    <parent link="${prefix}dyn3"/>
+    <child link="${prefix}dyn3_r"/>
+    <origin xyz="0 0 0.0" rpy="0 0 0"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.7" lower="-3.14" upper="3.14"/>
+  </joint>
+ 
+ <link name="${prefix}dyn3_r">
+ 
+  </link>
+ 
+  <joint name="${prefix}dyn3_f5" type="fixed">
+    <parent link="${prefix}dyn3_r"/>
+    <child link="${prefix}f5"/>
+    <origin xyz="-0.046 -0.0 -0.002" rpy="1.57 1.57 3.1415 "/>
+  </joint>
+ 
+  <link name="${prefix}f5">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg fra2mo_armando)/meshes/f4_n_f3.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="orange"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.04 0.05 0.02"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+   
+    <inertial>
+      <mass value="0.1"/>
+  <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>    </inertial>
+  </link>
+ 
+  <joint name="${prefix}f5_dyn4" type="fixed">
+    <parent link="${prefix}f5"/>
+    <child link="${prefix}dyn4"/>
+    <origin xyz="-0.004 0.065 -0.0" rpy="-1.57 3.1415 1.57 "/>
+  </joint>
+ 
+  <link name="${prefix}dyn4">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg fra2mo_armando)/meshes/dyn.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.03 0.03 0.03"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+   
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="6.90013881e-05" ixy="0.0" ixz="0.0" iyy="1.24554875e-04" iyz="0.0" izz="1.04295793e-04"/>
+    </inertial>
+  </link>
+ 
+  <joint name="${prefix}j3" type="revolute">
+    <parent link="${prefix}dyn4"/>
+    <child link="${prefix}dyn4_r"/>
+    <origin xyz="0 0 0.0" rpy="0 0 0"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.7" lower="-3.14" upper="3.14"/>
+  </joint>
+ 
+  <link name="${prefix}dyn4_r">
+   
+  </link>
+ 
+  <joint name="${prefix}f5_wrist" type="fixed">
+    <parent link="${prefix}dyn4_r"/>
+    <child link="${prefix}wrist"/>
+    <origin xyz="-0.017 -0.013 0.003" rpy="1.57 1.57 -1.57"/>
+  </joint>
+ 
+  <link name="${prefix}wrist">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg fra2mo_armando)/meshes/wrist.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.05 0.02 0.01"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+   
+     <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="6.90013881e-05" ixy="0.0" ixz="0.0" iyy="1.24554875e-04" iyz="0.0" izz="1.04295793e-04"/>
+    </inertial>
+  </link>
+ 
+  <joint name="${prefix}wrist_dyn5" type="fixed">
+    <parent link="${prefix}wrist"/>
+    <child link="${prefix}dyn5"/>
+    <origin xyz="0.0038 -0.013 0.0275" rpy="0 0 1.57"/>
+  </joint>
+ 
+    <link name="${prefix}dyn5">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg fra2mo_armando)/meshes/dyn.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="cyan"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.03 0.03 0.03"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+   
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="6.90013881e-05" ixy="0.0" ixz="0.0" iyy="1.24554875e-04" iyz="0.0" izz="1.04295793e-04"/>
+    </inertial>
+  </link>
+ 
+  <joint name="${prefix}dyn5_dyn5_r" type="fixed">
+    <parent link="${prefix}dyn5"/>
+    <child link="${prefix}dyn5_r"/>
+    <origin xyz="0 0 0.0" rpy="0 0 0"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-3.14" upper="3.14"/>
+  </joint>
+ 
+  <link name="${prefix}dyn5_r">
+   
+  </link>
+ 
+  <joint name="${prefix}wrist_rotate_dyn5" type="fixed">
+    <parent link="${prefix}dyn5_r"/>
+    <child link="${prefix}crawer_base"/>
+    <origin xyz="0.015 0 0.019" rpy="0 0 1.57"/>
+  </joint>
+   
+  <link name="${prefix}crawer_base">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg fra2mo_armando)/meshes/the_crawer_base.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="orange"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.03 0.03 0.02"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+   
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="6.90013881e-05" ixy="0.0" ixz="0.0" iyy="1.24554875e-04" iyz="0.0" izz="1.04295793e-04"/>
+    </inertial>
+  </link>
+   
+  <joint name="${prefix}crawer_base_crawer_left" type="fixed">
+    <parent link="${prefix}crawer_base"/>
+    <child link="${prefix}crawer_left"/>
+    <origin xyz="-0.03 0.015 0.01" rpy="0 -1.57 0"/>
+  </joint>
+ 
+  <link name="${prefix}crawer_left">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg fra2mo_armando)/meshes/the_crawer.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.04 0.01 0.01"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+   
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="6.90013881e-05" ixy="0.0" ixz="0.0" iyy="1.24554875e-04" iyz="0.0" izz="1.04295793e-04"/>
+    </inertial>
+  </link>
+ 
+ 
+  <joint name="${prefix}gripper_right_joint" type="prismatic">
+    <parent link="${prefix}crawer_base"/>
+    <child link="${prefix}crawer_right"/>
+    <origin xyz="0.03 0.015 0.01" rpy="3.1415 -1.57 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" velocity="0.5" lower="-0.02" upper="0.04"/>
+    <dynamics damping="0.1" friction="0.1"/>
+  </joint>
+ 
+  <link name="${prefix}crawer_right">
+    <visual>
+      <geometry>
+        <mesh filename="file://$(arg fra2mo_armando)/meshes/the_crawer.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.04 0.01 0.01"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+   
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="6.90013881e-05" ixy="0.0" ixz="0.0" iyy="1.24554875e-04" iyz="0.0" izz="1.04295793e-04"/>
+    </inertial>
+  </link>
+
+
+<!-- definizione dei parametri tramite file .yaml  -->
+  <gazebo>  
+    <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+    <parameters>$(find fra2mo_armando)/config/fra2mo_controllers.yaml</parameters>
+      <controller_manager_prefix_node_name>controller_manager</controller_manager_prefix_node_name>
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+      <plugin filename="gz-sim-sensors-system"
+          name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+      </plugin>
+  </gazebo>
+
+  
+<!--3.a definizione camera_joint e camera_link -->
+  <joint name="${prefix}camera_joint" type="fixed">
+    <parent link="${prefix}base_link"/>  
+    <child link="${prefix}camera_link"/>
+    <origin xyz="0.0 0.0 0.1" rpy="0 0 3.14"/> 
+  </joint>
+
+  <link name="${prefix}camera_link">
+      <visual>
+          <geometry>
+              <box size="0.0000010 0.00000003 0.00000003"/>
+          </geometry>
+          <material name="red"/>
+      </visual>
+  </link>
+
+  <xacro:camera_link name="${prefix}camera_link" camera_pos="0 0 0.1"/>
+
+</xacro:macro>
+
+<!-- ros2_control block SOLO per il braccio Armando (la base usa il plugin Gazebo DiffDrive) -->
+<ros2_control name="FRA2MO_HardwareInterface_Ignition" type="system">
+
+  <hardware>
+    <plugin>ign_ros2_control/IgnitionSystem</plugin> 
+  </hardware>
+
+  <!-- Armando arm joints -->
+  <xacro:hardware_joint name="arm_j0" initial_pos="0.0"/>
+  <xacro:hardware_joint name="arm_j1" initial_pos="0.0"/>
+  <xacro:hardware_joint name="arm_j2" initial_pos="0.0"/>
+  <xacro:hardware_joint name="arm_j3" initial_pos="0.0"/>
+  
+  <!-- Gripper joint (controlled as 5th joint in position_controller) -->
+  <joint name="arm_gripper_right_joint">
+    <command_interface name="position"/>
+    <state_interface name="position">
+      <param name="initial_value">0.03</param>
+    </state_interface>
+    <state_interface name="velocity">
+      <param name="initial_value">0.0</param>
+    </state_interface>
+    <state_interface name="effort">
+      <param name="initial_value">0.0</param>
+    </state_interface>
+  </joint>
+  
+</ros2_control>
+
+</robot>
+
+  
+
+   
+     

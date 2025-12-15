@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot  xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:include filename="$(find ros2_fra2mo)/urdf/utility_macro.xacro" />
+  <xacro:include filename="$(find fra2mo_armando)/urdf/utility_macro.xacro" />
 
   <!-- WHOLE BASE MACRO-->
   <xacro:macro name="fra2mo_base" > <!--fb : front, back ; lr: left, right -->
@@ -12,6 +12,10 @@
     <xacro:property name="wheel_mass" value="2.5" />
     <xacro:property name="wheel_radius" value="0.035" /> 
     <xacro:property name="wheel_axle" value="0.13" /> 
+    <xacro:property name="mount_height" value="0.01" />
+    <xacro:property name="mount_radius" value="0.09" />
+    <xacro:property name="mount_mass" value="0.5" />
+    <xacro:property name="mount_offset_z" value="0.18" />
    
     <!-- Actual body/chassis of the robot -->
     <link name="base_footprint">
@@ -27,7 +31,7 @@
       <!-- Visual representation -->
       <visual> 
         <geometry>
-          <mesh filename="file://$(find ros2_fra2mo)/meshes/rl_fra2mo_body.stl" scale="0.001 0.001 0.001" />
+          <mesh filename="file://$(find fra2mo_armando)/meshes/rl_fra2mo_body.stl" scale="0.001 0.001 0.001" />
         </geometry>
         <material name="Blue" />
         <origin xyz="0 0 0" rpy="0 0 0" />
@@ -51,14 +55,14 @@
     <link name="left_wheel_link">
       <visual> 
         <geometry>
-          <mesh filename="file://$(find ros2_fra2mo)/meshes/rl_fra2mo_wheel.stl" scale="0.001 0.001 0.001" />
+          <mesh filename="file://$(find fra2mo_armando)/meshes/rl_fra2mo_wheel.stl" scale="0.001 0.001 0.001" />
         </geometry>
         <material name="Black" />
         <origin xyz="0 0 0" rpy="0 0 0" />
       </visual>
       <collision> 
         <geometry>
-          <mesh filename="file://$(find ros2_fra2mo)/meshes/rl_fra2mo_wheel.stl" scale="0.001 0.001 0.001" />
+          <mesh filename="file://$(find fra2mo_armando)/meshes/rl_fra2mo_wheel.stl" scale="0.001 0.001 0.001" />
         </geometry>
         <origin xyz="0 0 0" rpy="0 0 0" />
       </collision>
@@ -73,14 +77,14 @@
     <link name="right_wheel_link">
       <visual> 
         <geometry>
-          <mesh filename="file://$(find ros2_fra2mo)/meshes/rl_fra2mo_wheel.stl" scale="0.001 0.001 0.001" />
+          <mesh filename="file://$(find fra2mo_armando)/meshes/rl_fra2mo_wheel.stl" scale="0.001 0.001 0.001" />
         </geometry>
-        <material name="Black"/>
+        <material name="Black" />
         <origin xyz="0 0 0" rpy="0 0 0" />
       </visual>
-      <collision> 
+      <collision>
         <geometry>
-          <mesh filename="file://$(find ros2_fra2mo)/meshes/rl_fra2mo_wheel.stl" scale="0.001 0.001 0.001" />
+          <mesh filename="file://$(find fra2mo_armando)/meshes/rl_fra2mo_wheel.stl" scale="0.001 0.001 0.001" />
         </geometry>
         <origin xyz="0 0 0" rpy="0 0 0" />
       </collision>
@@ -95,6 +99,25 @@
     <link name="d435_link">
     </link>
     <link name="lidar_link" />
+    <link name="top_mount_link">
+      <visual>
+        <geometry>
+          <cylinder length="${mount_height}" radius="${mount_radius}" />
+        </geometry>
+        <material name="Blue" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder length="${mount_height}" radius="${mount_radius}" />
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" />
+        <mass value="${mount_mass}" />
+        <xacro:cylinder_inertia m="${mount_mass}" r="${mount_radius}" h="${mount_height}" />
+      </inertial>
+    </link>
 
     <!-- Joints -->
     <joint name="base_footprint_joint" type="fixed">
@@ -128,6 +151,11 @@
       <child link="lidar_link" />
       <origin xyz="0.0 0.0 0.125" rpy="0 0 0" />
     </joint>
+    <joint name="top_mount_joint" type="fixed">
+      <parent link="base_link" />
+      <child link="top_mount_link" />
+      <origin xyz="0.0 0.0 ${mount_offset_z}" rpy="0 0 0" />
+    </joint>
 
     <!-- Gazebo Material Assignments 
     <gazebo reference="base_link">
@@ -159,15 +187,13 @@
       </actuator>
     </transmission>
 
-    <!-- Plugin for differential drive control in Gazebo--> 
+    <!-- Plugin for differential drive control in Gazebo --> 
     <gazebo>
       <plugin name="ignition::gazebo::systems::DiffDrive" filename="libignition-gazebo-diff-drive-system.so">
         <left_joint>left_wheel_joint</left_joint>
         <right_joint>right_wheel_joint</right_joint>
         <wheel_separation>${wheel_axle}</wheel_separation>
         <wheel_radius>${wheel_radius}</wheel_radius>
-        <!--<frame_id>base_footprint</frame_id> TO LOOK
-        <ignition_frame_id>base_footprint</ignition_frame_id>--> 
         <odom_publish_frequency>50</odom_publish_frequency>
         <topic>cmd_vel</topic>
       </plugin>

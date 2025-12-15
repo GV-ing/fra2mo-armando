@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="lidar_gazebo_macro" >
 
-  <!--<xacro:include filename="$(find ros2_fra2mo)/urdf/utility_macro.xacro" />-->
+  <!-- utility_macro.xacro already included in fra2mo_base_macro.xacro -->
 
   <xacro:macro name="lidar_gazebo_sensor" params="parent">
 
@@ -14,7 +14,7 @@
       <visual>
         <origin rpy="0 0 ${-M_PI_2}" xyz="0.0 0.0 -0.031" />
         <geometry>
-          <mesh filename="file://$(find ros2_fra2mo)/meshes/lidar.stl" scale="0.001 0.001 0.001" />
+          <mesh filename="file://$(find fra2mo_armando)/meshes/lidar.stl" scale="0.001 0.001 0.001" />
         </geometry>
         <material name="White" />
       </visual>
@@ -34,7 +34,6 @@
 
     <gazebo reference="laser_frame">
       <sensor name="laser_frame" type="gpu_lidar">
-          <!--<pose relative_to="laser_frame">0 0 0 0 0 0</pose>--> <!--TO LOOK-->
           <topic>lidar</topic>
           <update_rate>10</update_rate>
           <ray>
@@ -58,8 +57,8 @@
                   <resolution>0.01</resolution>
               </range>
             </ray>
-            <always_on>false</always_on>
-            <visualize>false</visualize>
+            <always_on>true</always_on>
+            <visualize>true</visualize>
             <frame_id>laser_frame</frame_id> <!--TO LOOK-->
             <ignition_frame_id>laser_frame</ignition_frame_id>
         </sensor>
@@ -73,9 +72,9 @@
     </plugin>  
   </gazebo>-->
 
-  <gazebo>
+  <!--<gazebo>
   <plugin filename="ignition-gazebo-sensors-system" name="gz::sim::systems::Sensors" />
-  </gazebo>
+  </gazebo>-->
 
   </xacro:macro>
 </robot>

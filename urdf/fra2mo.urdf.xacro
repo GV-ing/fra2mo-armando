@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="fra2mo" >
-  <xacro:include filename="$(find ros2_fra2mo)/urdf/fra2mo_base_macro.xacro"/>
-  <xacro:include filename="$(find ros2_fra2mo)/urdf/lidar_gazebo_macro.xacro"/> 
-  <!-- <xacro:include filename="$(find ros2_fra2mo)/urdf/d435_gazebo_macro.xacro" />  -->
+  <xacro:include filename="$(find fra2mo_armando)/urdf/fra2mo_base_macro.xacro"/>
+  <xacro:include filename="$(find fra2mo_armando)/urdf/lidar_gazebo_macro.xacro"/> 
+  <xacro:include filename="$(find fra2mo_armando)/urdf/armando_macro.xacro"/>
+  <!-- <xacro:include filename="$(find fra2mo_armando)/urdf/d435_gazebo_macro.xacro" />  -->
   
   <xacro:property name="LIDAR" value="True"/>
+  <xacro:property name="ARM" value="True"/>
   <!--<xacro:property name="DEPTH" value="True"/>-->
   
   <!-- Diff Drive Robot Base -->
@@ -14,6 +16,11 @@
   <!-- LIDAR Sensor--> 
   <xacro:if value="${LIDAR}">
     <xacro:lidar_gazebo_sensor parent="lidar_link"/>
+  </xacro:if>
+
+  <!-- Armando Manipulator -->
+  <xacro:if value="${ARM}">
+    <xacro:armando parent="top_mount_link" prefix="arm_" origin_xyz="0 0 0.04" origin_rpy="0 0 0"/>
   </xacro:if>
 
   <!-- RGBD Sensor (D435 Camera) -->

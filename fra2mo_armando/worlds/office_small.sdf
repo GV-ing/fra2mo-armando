@@ -1,0 +1,167 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <world name="office_small">
+    
+    <physics name='default_physics' default='0' type='ode'>
+      <gravity>0 0 -9.8066</gravity>
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>10</iters>
+          <sor>1.3</sor>
+          <use_dynamic_moi_rescaling>0</use_dynamic_moi_rescaling>
+        </solver>
+        <constraints>
+          <cfm>0</cfm>
+          <erp>0.2</erp>
+          <contact_max_correcting_vel>100</contact_max_correcting_vel>
+          <contact_surface_layer>0.001</contact_surface_layer>
+        </constraints>
+      </ode>
+      <max_step_size>0.004</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>250</real_time_update_rate>
+      <magnetic_field>6.0e-6 2.3e-5 -4.2e-5</magnetic_field>
+    </physics>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+
+    <!-- Pedestal 1 with cube on top -->
+    <include>
+      <uri>model://pedestal_1</uri>
+      <pose>1 1 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://cube_red</uri>
+      <pose>1 1 0.4501 0 0 0</pose>
+    </include>
+
+    <!-- Pedestal 2 with cylinder on top -->
+    <include>
+      <uri>model://pedestal_2</uri>
+      <pose>-1 1.5 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://cylinder_blue</uri>
+      <pose>-1 1.5 0.6001 0 0 0</pose>
+    </include>
+
+    <!-- Pedestal 3 with sphere on top -->
+    <include>
+      <uri>model://pedestal_3</uri>
+      <pose>2 -1 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://sphere_green</uri>
+      <pose>2 -1 0.5001 0 0 0</pose>
+    </include>
+
+    <!-- Pedestal 4 with small cube on top -->
+    <include>
+      <uri>model://pedestal_4</uri>
+      <pose>-2 -1.5 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://cube_yellow</uri>
+      <pose>-2 -1.5 0.4001 0 0 0.785</pose>
+    </include>
+
+    <!-- Pedestal 5 with rectangular box on top -->
+    <include>
+      <uri>model://pedestal_5</uri>
+      <pose>0 -2 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://box_magenta</uri>
+      <pose>0 -2 0.4801 0 0 0</pose>
+    </include>
+
+    <!-- Pedestal 6 with another cylinder on top -->
+    <include>
+      <uri>model://pedestal_6</uri>
+      <pose>1.5 -2.5 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://cylinder_cyan</uri>
+      <pose>1.5 -2.5 0.4201 0 0 0</pose>
+    </include>
+
+    <!-- Basket -->
+    <include>
+      <uri>model://basket</uri>
+      <pose>-2 0 0 0 0 0</pose>
+    </include>
+
+  <plugin
+    filename="gz-sim-physics-system"
+    name="gz::sim::systems::Physics">
+  </plugin>
+  <plugin
+    filename="gz-sim-user-commands-system"
+    name="gz::sim::systems::UserCommands">
+  </plugin>
+  <!--<plugin
+    filename="gz-sim-sensors-system"
+    name="gz::sim::systems::Sensors">
+    <render_engine>ogre2</render_engine>
+  </plugin>-->
+    <plugin
+    filename="gz-sim-scene-broadcaster-system"
+    name="gz::sim::systems::SceneBroadcaster">
+  </plugin>
+  <!--<plugin
+    filename="gz-sim-imu-system"
+    name="gz::sim::systems::Imu">
+  </plugin>
+  <plugin
+    filename="gz-sim-magnetometer-system"
+    name="gz::sim::systems::Magnetometer">
+  </plugin>
+  <plugin
+    filename="ignition-gazebo-forcetorque-system"
+    name="ignition::gazebo::systems::ForceTorque">
+  </plugin>
+  <plugin
+    filename="ignition-gazebo-particle-emitter2-system"
+    name="ignition::gazebo::systems::ParticleEmitter2">
+  </plugin>
+  <plugin
+    filename="gz-sim-contact-system"
+    name="gz::sim::systems::Contact">
+  </plugin>
+  <plugin
+    filename="ignition-gazebo-navsat-system"
+    name="ignition::gazebo::systems::NavSat">
+  </plugin>
+  <plugin
+    filename="gz-sim-air-pressure-system"
+    name="gz::sim::systems::AirPressure">
+  </plugin>-->  
+  
+  </world>
+</sdf>
+

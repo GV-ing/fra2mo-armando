@@ -33,7 +33,7 @@ ros2 launch fra2mo_armando launch_world.launch.py
 
 ### Gazebo
 ```bash
-ros2 launch display_fra2mo_armando.launch.py
+ros2 launch fra2mo_armando display_fra2mo_armando.py
 ```
 
 ### Comandi manuali

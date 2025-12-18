@@ -75,6 +75,6 @@ def generate_launch_description():
             map_server_node,
             amcl_node,
             nav_manager,
-            #rviz_node,
+            rviz_node,
         ]
     )

@@ -442,7 +442,7 @@
 <!-- definizione dei parametri tramite file .yaml  -->
   <gazebo>  
     <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
-    <parameters>$(find fra2mo_armando)/config/fra2mo_controllers.yaml</parameters>
+    <parameters>$(find fra2mo_armando)/config/fra2mo_armando_controllers.yaml</parameters>
       <controller_manager_prefix_node_name>controller_manager</controller_manager_prefix_node_name>
     </plugin>
   </gazebo>

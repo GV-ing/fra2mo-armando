@@ -23,9 +23,9 @@ waypoints = [
         'position': {'x': 2.0, 'y': -1.5, 'z': 0.0},
         'orientation': {'x': 0.0, 'y': 0.0, 'z': 0.0, 'w': 1.0}
     }
-    # Aggiungi altri pilastri qui se necessario
+    # Per ora 2 pilastri
 ]
-LIDAR_STOP_DIST = 0.5  # metri
+LIDAR_STOP_DIST = 0.03  # metri
 
 class PickPlaceDemo(Node):
     def __init__(self):

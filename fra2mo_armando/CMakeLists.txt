@@ -35,8 +35,6 @@ install(TARGETS dynamic_tf_publisher
 install(PROGRAMS
   scripts/reach_goal.py
   scripts/follow_waypoints.py
-  scripts/test_gripper.py
-  scripts/ik_pick_place.py
   scripts/pick_place_demo.py
   DESTINATION lib/${PROJECT_NAME}
 )

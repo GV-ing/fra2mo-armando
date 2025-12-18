@@ -1,6 +1,6 @@
-# 🤖 IK-BASED PICK & PLACE - GUIDA RAPIDA
+# 🤖 FRA2MO ARMANDO
 
-Sistema pick&place semplificato con **cinematica inversa** per Armando.
+
 
 ## 📋 PREREQUISITI
 

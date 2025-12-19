@@ -4,8 +4,9 @@
 
 ## 📋 PREREQUISITI
 
-### 1. Installa ikpy (libreria IK)
+### 1. Istallazione librerie necessarie
 ```bash
+rosdep install -i --from-path src --rosdistro <distro> -y
 pip3 install ikpy
 ```
 

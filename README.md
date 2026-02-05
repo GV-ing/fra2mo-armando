@@ -1,30 +1,30 @@
 # 🤖 FRA2MO ARMANDO
 
-**Robot mobile con braccio manipolatore per applicazioni di Pick & Place**
+**Mobile robot with manipulator arm for Pick & Place applications**
 
-## 📖 Descrizione
+## 📖 Description
 
-FRA2MO ARMANDO è un progetto ROS2 che implementa un robot mobile differenziale equipaggiato con un braccio manipolatore a 4 gradi di libertà (DOF) e un gripper. Il robot è progettato per eseguire task autonomi di **Pick & Place** in ambienti simulati tramite Gazebo Ignition.
+FRA2MO ARMANDO is a ROS2 project that implements a differential mobile robot equipped with a 4 degrees of freedom (DOF) manipulator arm and a gripper. The robot is designed to perform autonomous **Pick & Place** tasks in simulated environments using Gazebo Ignition.
 
-### Caratteristiche Principali
+### Main Features
 
-- 🚗 **Base mobile differenziale** con controllo tramite Nav2
-- 🦾 **Braccio manipolatore 4-DOF** con cinematica inversa (IKPy)
-- 🔧 **Gripper** per operazioni di presa e rilascio
-- 🗺️ **SLAM** per mappatura dell'ambiente (slam_toolbox)
-- 📍 **Localizzazione AMCL** per navigazione autonoma
-- 🔍 **Esplorazione autonoma** con explore_lite
-- 📷 **Sensori**: LiDAR e Camera
+- 🚗 **Differential mobile base** with Nav2 control
+- 🦾 **4-DOF manipulator arm** with inverse kinematics (IKPy)
+- 🔧 **Gripper** for pick and release operations
+- 🗺️ **SLAM** for environment mapping (slam_toolbox)
+- 📍 **AMCL localization** for autonomous navigation
+- 🔍 **Autonomous exploration** with explore_lite
+- 📷 **Sensors**: LiDAR and Camera
 
 ---
 
-## 📋 Prerequisiti
+## 📋 Prerequisites
 
-### Sistema Operativo
+### Operating System
 - Ubuntu 22.04 LTS
 - ROS2 Humble 
 
-### Dipendenze ROS2
+### ROS2 Dependencies
 ```bash
 sudo apt update
 sudo apt install ros-humble-nav2-bringup ros-humble-slam-toolbox ros-humble-explore-lite \
@@ -32,20 +32,20 @@ sudo apt install ros-humble-nav2-bringup ros-humble-slam-toolbox ros-humble-expl
                  ros-humble-nav2-simple-commander
 ```
 
-### 1. Installazione librerie necessarie
+### 1. Install required libraries
 ```bash
 cd ~/ros2_ws
 rosdep install -i --from-path src --rosdep humble -y
 pip3 install ikpy
 ```
 
-### 2. Rendi eseguibili gli script
+### 2. Make scripts executable
 ```bash
 cd ~/ros2_ws/src/fra2mo_armando
 chmod +x scripts/*.py
 ```
 
-### 3. Build del workspace
+### 3. Build the workspace
 ```bash
 cd ~/ros2_ws
 colcon build --packages-select fra2mo_armando
@@ -54,41 +54,41 @@ source install/setup.bash
 
 ---
 
-## 🗂️ Struttura del Package
+## 🗂️ Package Structure
 
 ```
 fra2mo_armando/
-├── config/                    # File di configurazione
-│   ├── amcl.yaml             # Parametri AMCL
-│   ├── navigation.yaml       # Parametri Nav2
-│   ├── slam.yaml             # Parametri SLAM
-│   ├── explore.yaml          # Parametri esplorazione
-│   └── fra2mo_armando_controllers.yaml  # Controller ros2_control
+├── config/                    # Configuration files
+│   ├── amcl.yaml             # AMCL parameters
+│   ├── navigation.yaml       # Nav2 parameters
+│   ├── slam.yaml             # SLAM parameters
+│   ├── explore.yaml          # Exploration parameters
+│   └── fra2mo_armando_controllers.yaml  # ros2_control controllers
 ├── launch/                    # Launch files
-│   ├── launch_world.launch.py          # Gazebo + Robot completo
-│   ├── display_fra2mo_armando.py       # Solo visualizzazione RViz
+│   ├── launch_world.launch.py          # Gazebo + Full robot
+│   ├── display_fra2mo_armando.py       # RViz visualization only
 │   ├── fra2mo_slam.launch.py           # SLAM
-│   ├── fra2mo_amcl.launch.py           # Localizzazione AMCL
-│   ├── fra2mo_navigation.launch.py     # Navigazione Nav2
-│   ├── fra2mo_explore.launch.py        # Esplorazione autonoma
-│   └── ik_pick_place.launch.py         # Task Pick & Place
-├── maps/                      # Mappe salvate
+│   ├── fra2mo_amcl.launch.py           # AMCL localization
+│   ├── fra2mo_navigation.launch.py     # Nav2 navigation
+│   ├── fra2mo_explore.launch.py        # Autonomous exploration
+│   └── ik_pick_place.launch.py         # Pick & Place task
+├── maps/                      # Saved maps
 │   └── mia_mappa.yaml
-├── meshes/                    # Mesh 3D del robot
-├── models/                    # Modelli Gazebo
-├── rviz_conf/                 # Configurazioni RViz
-├── scripts/                   # Script Python
-│   ├── ik_pick_place.py      # Pick & Place con IK
-│   ├── pick_place_demo.py    # Demo Pick & Place
-│   ├── follow_waypoints.py   # Navigazione waypoints
-│   ├── reach_goal.py         # Navigazione a goal singolo
-│   └── test_arm.py           # Test braccio
-├── src/                       # Sorgenti C++
-│   ├── pick_place.cpp        # Nodo Pick & Place C++
-│   └── odom_bl_tf.cpp        # Publisher TF odom->base_link
-├── urdf/                      # Descrizione robot URDF/Xacro
+├── meshes/                    # Robot 3D meshes
+├── models/                    # Gazebo models
+├── rviz_conf/                 # RViz configurations
+├── scripts/                   # Python scripts
+│   ├── ik_pick_place.py      # Pick & Place with IK
+│   ├── pick_place_demo.py    # Pick & Place demo
+│   ├── follow_waypoints.py   # Waypoints navigation
+│   ├── reach_goal.py         # Single goal navigation
+│   └── test_arm.py           # Arm test
+├── src/                       # C++ sources
+│   ├── pick_place.cpp        # Pick & Place C++ node
+│   └── odom_bl_tf.cpp        # TF publisher odom->base_link
+├── urdf/                      # Robot URDF/Xacro description
 │   └── fra2mo.urdf.xacro
-├── worlds/                    # Mondi Gazebo
+├── worlds/                    # Gazebo worlds
 │   └── office_small.sdf
 ├── CMakeLists.txt
 └── package.xml
@@ -96,131 +96,131 @@ fra2mo_armando/
 
 ---
 
-## 🚀 Utilizzo
+## 🚀 Usage
 
-### 1. Avvio Simulazione Gazebo
+### 1. Start Gazebo Simulation
 
-Lancia il mondo Gazebo con il robot:
+Launch the Gazebo world with the robot:
 ```bash
 ros2 launch fra2mo_armando launch_world.launch.py
 ```
 
-### 2. Solo Visualizzazione RViz (senza Gazebo)
+### 2. RViz Visualization Only (without Gazebo)
 ```bash
 ros2 launch fra2mo_armando display_fra2mo_armando.py
 ```
 
-### 3. SLAM - Mappatura dell'ambiente
+### 3. SLAM - Environment Mapping
 
-In un nuovo terminale (con Gazebo già attivo):
+In a new terminal (with Gazebo already running):
 ```bash
 ros2 launch fra2mo_armando fra2mo_slam.launch.py
 ```
 
-Per salvare la mappa:
+To save the map:
 ```bash
 ros2 run nav2_map_server map_saver_cli -f ~/ros2_ws/src/fra2mo_armando/maps/mia_mappa
 ```
 
-### 4. Localizzazione AMCL
+### 4. AMCL Localization
 
-Con mappa già disponibile:
+With map already available:
 ```bash
 ros2 launch fra2mo_armando fra2mo_amcl.launch.py
 ```
 
-### 5. Navigazione Autonoma
+### 5. Autonomous Navigation
 ```bash
 ros2 launch fra2mo_armando fra2mo_navigation.launch.py
 ```
 
-### 6. Esplorazione Autonoma
+### 6. Autonomous Exploration
 
-Esplorazione con SLAM integrato:
+Exploration with integrated SLAM:
 ```bash
 ros2 launch fra2mo_armando fra2mo_explore.launch.py
 ```
 
 ---
 
-## 🎯 Task Pick & Place
+## 🎯 Pick & Place Task
 
-### Avvio completo (Gazebo + Task)
+### Full launch (Gazebo + Task)
 ```bash
 ros2 launch fra2mo_armando ik_pick_place.launch.py
 ```
 
-### Solo Task (con Gazebo già running)
+### Task only (with Gazebo already running)
 ```bash
 ros2 run fra2mo_armando ik_pick_place.py
 ```
 
-Il task esegue:
-1. Navigazione verso i pilastri definiti
-2. Rilevamento ostacolo tramite LiDAR
-3. Esecuzione sequenza di Pick con cinematica inversa
-4. Navigazione verso la box di deposito
-5. Esecuzione sequenza di Place
+The task performs:
+1. Navigation towards the defined pillars
+2. Obstacle detection via LiDAR
+3. Pick sequence execution with inverse kinematics
+4. Navigation towards the deposit box
+5. Place sequence execution
 
 ---
 
-## 🎮 Controllo Manuale
+## 🎮 Manual Control
 
-### Teleoperazione da tastiera
+### Keyboard teleoperation
 ```bash
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ```
 
-### Controllo diretto del braccio
+### Direct arm control
 ```bash
 ros2 topic pub /position_controller/commands std_msgs/msg/Float64MultiArray \
   "{data: [1.0, 0.5, -1.0, -0.5, 0.0]}"
 ```
 
-Formato: `[joint1, joint2, joint3, joint4, gripper]`
+Format: `[joint1, joint2, joint3, joint4, gripper]`
 
 ---
 
-## 📡 Topic Principali
+## 📡 Main Topics
 
-| Topic | Tipo | Descrizione |
+| Topic | Type | Description |
 |-------|------|-------------|
-| `/cmd_vel` | `geometry_msgs/Twist` | Comandi velocità base |
-| `/scan` | `sensor_msgs/LaserScan` | Dati LiDAR |
-| `/videocamera` | `sensor_msgs/Image` | Immagini camera |
-| `/position_controller/commands` | `std_msgs/Float64MultiArray` | Comandi braccio |
-| `/amcl_pose` | `geometry_msgs/PoseWithCovarianceStamped` | Posa stimata AMCL |
-| `/model/fra2mo/odometry` | `nav_msgs/Odometry` | Odometria robot |
+| `/cmd_vel` | `geometry_msgs/Twist` | Base velocity commands |
+| `/scan` | `sensor_msgs/LaserScan` | LiDAR data |
+| `/videocamera` | `sensor_msgs/Image` | Camera images |
+| `/position_controller/commands` | `std_msgs/Float64MultiArray` | Arm commands |
+| `/amcl_pose` | `geometry_msgs/PoseWithCovarianceStamped` | AMCL estimated pose |
+| `/model/fra2mo/odometry` | `nav_msgs/Odometry` | Robot odometry |
 
 ---
 
-## ⚙️ Parametri di Configurazione
+## ⚙️ Configuration Parameters
 
 ### Controller Type
-Il launch file supporta diversi tipi di controller:
+The launch file supports different controller types:
 ```bash
 ros2 launch fra2mo_armando launch_world.launch.py controller_type:=position_controller
 ```
 
-Opzioni:
+Options:
 - `position_controller` (default)
 - `joint_trajectory_controller`
 
 ---
 
-## 👥 Autore
+## 👥 Author
 
 - **GV-ing** - [GitHub](https://github.com/GV-ing)
 
 ---
 
-## 📄 Licenza
+## 📄 License
 
-Questo progetto è sviluppato per scopi didattici nell'ambito del corso di Robotics Lab.
+This project is developed for educational purposes as part of the Robotics Lab course.
 
 ---
 
-## 🔗 Riferimenti
+## 🔗 References
 
 - [ROS2 Humble Documentation](https://docs.ros.org/en/humble/)
 - [Nav2 Documentation](https://navigation.ros.org/)
